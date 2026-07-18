@@ -33,7 +33,7 @@ Os códigos servem como material de estudo e prática para reforçar os conceito
 
 ## Como clonar apenas esta pasta
 
-Este repositório contém todas as disciplinas do 2° ano. Se quiser baixar **somente** a pasta "Física", use o sparse-checkout do Git:
+Este repositório contém todas as disciplinas do 3° ano. Se quiser baixar **somente** a pasta "Sistemas Operacionais", use o sparse-checkout do Git:
 
 ```bash
 git clone --no-checkout https://github.com/MariaCampanaP/Terceiro-Ano-de-CCOMP.git

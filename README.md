@@ -27,9 +27,9 @@ Centralizar os códigos, exercícios e anotações produzidos durante o segundo 
 - Ubuntu (64-bit);
 - Code::Blocks;
 - Arduino IDE;
-- Tinkercad
-- Draw.io;
-- 
+- Tinkercad;
+- Draw.io.
+  
 ## ☕︎ Como Usar
 
 ## Como clonar este repositório

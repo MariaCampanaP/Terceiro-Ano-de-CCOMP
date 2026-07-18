@@ -1,0 +1,41 @@
+Inteligência Artificial - Trabalho 1° Bimestre
+Aplicação de um Algoritmo Genético em python para resolver o TSP
+Alunas: Luna Osti de França e Maria Rita Campana Peixoto
+
+Descrição do Projeto
+Este projeto implementa um Algoritmo Genético em Python para resolver o Problema do Caixeiro Viajante (Travelling Salesman Problem - TSP), buscando o caminho de menor distância entre um conjunto de cidades.
+
+Como executar:
+
+Software Necessário
+--> Visual Studio Code (disponível em: https://code.visualstudio.com/)
+--> Python 3.6 ou superior (disponível em: https://www.python.org/downloads/)
+
+Bibliotecas Python:
+--> numpy
+--> matplotlib
+Instalação das dependências
+Execute no terminal:
+pip install numpy matplotlib
+
+Preparar os arquivos
+1. Extraia a pasta ZIP em uma localização de fácil acesso
+2. Abra o VS Code
+3. Clique em: File -> Open Folder
+4. Selecione a pasta do projeto
+
+Executar o Programa
+Para executar o programa, é necessário ter uma instância no formato .tsp salva no seu computador.
+1. Abra o arquivo da instância .tsp em um editor de texto.
+2. Copie apenas as linhas com as coordenadas das cidades no formato:
+	númeroDaCidade x y
+	númeroDaCidade x y
+3. Abra o arquivo Algoritmo Genético.py
+4. Execute o programa (botão "Run" no VS Code ou terminal)
+5. Cole os dados copiados no terminal
+6. Pressione enter com uma linha vazia para dar início ao programa
+
+Observações importantes
+--> O programa não lê arquivos .tsp automaticamente, é necessário colar os dados manualmente
+--> Copie apenas as linhas com coordenadas (ignore cabeçalhos como NAME, TYPE, etc.)
+--> Inserir número com casas decimais faz com que o programa não funcione corretamente por algum motivo

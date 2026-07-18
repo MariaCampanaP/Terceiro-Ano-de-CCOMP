@@ -21,8 +21,8 @@ As atividades servem como material de estudo e prática para reforçar os concei
 
 ## ☕︎ Tecnologia e Linguagens Utilizadas
 
-- *SGBD relacional (MySQL, PostgreSQL ou similar);*
-- *Draw.io.*
+- SGBD relacional (MySQL, PostgreSQL ou similar);
+- Draw.io.
   
 ## ☕︎ Como Usar
 

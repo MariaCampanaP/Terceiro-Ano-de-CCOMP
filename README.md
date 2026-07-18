@@ -28,6 +28,7 @@ Centralizar os códigos, exercícios e anotações produzidos durante o segundo 
 - Code::Blocks;
 - Arduino IDE;
 - Tinkercad;
+- Visual Studio Code;
 - Draw.io.
   
 ## ☕︎ Como Usar

@@ -14,6 +14,7 @@ Este repositório reúne implementações de conceitos fundamentais de **Banco d
 - *Álgebra Relacional*
 - *Produto Cartesiano e Renomeação*
 - *Comandos DDL*
+- *Consultas SQL com SELECT*
 
 # ☕︎ Objetivo
 

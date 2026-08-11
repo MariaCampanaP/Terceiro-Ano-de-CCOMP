@@ -9,6 +9,8 @@ Repositório contendo exercícios da disciplina **Inteligência Artificial** do 
 Este repositório reúne implementações de conceitos fundamentais da **Inteligência Artificial**, abordando tópicos como:
 
 - *Algoritmo Genético*
+- *MLP*
+- *CNN*
 
 ## ☕︎︎ Objetivo
 

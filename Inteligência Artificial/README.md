@@ -11,6 +11,7 @@ Este repositório reúne implementações de conceitos fundamentais da **Intelig
 - *Algoritmo Genético*
 - *MLP*
 - *CNN*
+- *Ripper*
 
 ## ☕︎︎ Objetivo
 

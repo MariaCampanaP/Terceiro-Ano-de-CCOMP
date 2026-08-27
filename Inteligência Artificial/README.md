@@ -12,6 +12,7 @@ Este repositório reúne implementações de conceitos fundamentais da **Intelig
 - *MLP*
 - *CNN*
 - *Ripper*
+- *Árvore de Decisão*
 
 ## ☕︎︎ Objetivo
 

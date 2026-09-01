@@ -13,6 +13,7 @@ Este repositório reúne implementações de conceitos fundamentais da **Intelig
 - *CNN*
 - *Ripper*
 - *Árvore de Decisão*
+- *Random Forest*
 
 ## ☕︎︎ Objetivo
 

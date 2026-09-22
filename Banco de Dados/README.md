@@ -9,12 +9,15 @@ Repositório contendo exercícios da disciplina **Banco de Dados** do terceiro a
 Este repositório reúne implementações de conceitos fundamentais de **Banco de Dados**, abordando tópicos como:
 
 - *Introdução a Banco de Dados*
-- *Abordagem Relacional*
-- *Conversão de modelo ER para modelo relacional*
+- *Diagrama Entidade-Relacionamento (DER)*
+- *Modelo Relacional*
+- *Conversão de Modelo ER para Relacional*
+- *Conversão de Herança (Generalização/Especialização)*
 - *Álgebra Relacional*
-- *Produto Cartesiano e Renomeação*
-- *Comandos DDL*
-- *Consultas SQL com SELECT*
+- *Comandos DDL (Data Definition Language)*
+- *Comandos DML - Consultas com SELECT*
+- *Consultas SQL avançadas*
+- *Operações CRUD com PostgreSQL*
 
 # ☕︎ Objetivo
 

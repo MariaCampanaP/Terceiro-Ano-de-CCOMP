@@ -18,6 +18,7 @@ Este repositório reúne implementações de conceitos fundamentais de **Banco d
 - *Comandos DML - Consultas com SELECT*
 - *Consultas SQL avançadas*
 - *Operações CRUD com PostgreSQL*
+- *Procedures e Triggers no PostgreSQL*
 
 # ☕︎ Objetivo
 

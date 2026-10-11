@@ -12,6 +12,7 @@ Este repositório reúne o conteúdo estudado ao longo do segundo ano, organizad
 - *Sistemas Operacionais*
 - *Sistemas Microcontrolados*
 - *Inteligência Artificial*
+- *Redes de Computadores e Sistemas Distribuídos*
 
 ## ☕︎ Objetivo
 

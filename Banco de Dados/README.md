@@ -19,6 +19,8 @@ Este repositório reúne implementações de conceitos fundamentais de **Banco d
 - *Consultas SQL avançadas*
 - *Operações CRUD com PostgreSQL*
 - *Procedures e Triggers no PostgreSQL*
+- *Transações e ACID no PostgreSQL*
+- *Views*
 
 # ☕︎ Objetivo
 

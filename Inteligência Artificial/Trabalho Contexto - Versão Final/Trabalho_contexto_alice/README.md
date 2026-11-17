@@ -1,151 +1,282 @@
-# Contexto - Alice no País das Maravilhas
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=120&color=FFDE21&reversal=false"/>
+
+## ☕︎︎ Projeto - Contexto: Alice no País das Maravilhas - Versão Final
 
 Jogo de adivinhação de palavras inspirado no jogo online [Contexto](https://contexto.me/), desenvolvido para as disciplinas de **Inteligência Artificial** e **Redes de Computadores e Sistemas Distribuídos** do curso de Bacharelado em Ciência da Computação da Universidade Estadual do Paraná (UNESPAR).
 
-O jogo utiliza como base o livro **Alice no País das Maravilhas** de Lewis Carroll, tanto para a identidade visual da interface quanto para o vocabulário que será usado no cálculo de similaridade semântica entre as palavras.
+O projeto utiliza como referência a obra **Alice no País das Maravilhas**, de Lewis Carroll, tanto na identidade visual da interface quanto na construção do vocabulário utilizado pelo algoritmo de similaridade semântica.
 
-## Equipe
+A aplicação combina **Processamento de Linguagem Natural (NLP)**, vetores de palavras (world embeddings) e similaridade de cosseno para criar uma experiência de adivinhação baseada na proximidade de significado entre palavras.
 
-- Luna Osti de França
-- Maria Rita Campana Peixoto
-- Vallentina Rodrigues Costa Groetaers Sousa
+## ☕︎︎ Sobre o projeto
 
-## Como o jogo funciona 
+O Contexto é um jogo de adivinhação no qual o objetivo é descobrir uma palavra secreta por meio de tentativas ilimitadas.
 
-O servido sorteia uma **palavra secreta** a partir do vocabulário do livro e calcula um **ranking** de todas as outras palavras por proximidade semântica com ela. A cada tentativa, o jogador descobre em que posição do ranking sua palavra está: a palavra secreta é a posição **1**, e quanto menor o número, mais perto o jogador está da resposta.
+Inspirado no jogo original, o projeto utiliza um sistema de classificação semântica: cada palavra digitada recebe uma posição em um ranking, indicando sua proximidade em relação à palavra secreta.
 
-## Entregas
+Nesta versão, o vocabulário é extraído do livro Alice no País das Maravilhas, permitindo explorar técnicas de Inteligência Artificial em um conjunto de palavras delimitado por uma obra literária.
 
-### 3° Bimestre 
+## ☕︎︎ Como o jogo funciona
 
-- Definição das tecnologias utilizadas
-- Definição do livro escolhido e do visual do jogo
-- Implementação das telas iniciais (Menu, Ajuda, Sobre e Jogo), com navegação funcional entre elas
+1. O servidor sorteia uma palavra secreta a partir do vocabulário extraído do livro.
+2. Um ranking é calculado considerando a similaridade semântica entre todas as palavras do vocabulário e a palavra secreta.
+3. O jogador realiza tentativas por meio da interface gráfica.
+4. Cada tentativa retorna uma posição real no ranking.
+5. Quanto menor o número da posição, maior a proximidade semântica com a palavra secreta
 
-### 4° Bimestre
+A palavra secreta ocupa sempre a posição 1.
 
-- Separação do projeto em **cliente** (interface) e **servidor** (lógica do jogo), comunicando-se via **XML-RPC**
-- Processamento do livro com NLP e cálculo real do ranking por **similaridade de cosseno**
-- Posição real de cada palavra no ranking
-- Dicas funcionando
-- Validação de palavras (inválidas e repetidas)
-- Barra de proximidade colorida e tabela ordenada por proximidade
-- Telas de resultado (vitória e desistência), com revelação da palavra secreta
+O jogo também oferece dicas, validação de palavras, identificação de tentativas repetidas e indicadores visuais de proximidade.
 
-## Arquitetura
+## ☕︎︎ Funcionalidades implementadas
+
+## Interface gráfica
+- Menu principal com navegação entre as telas.
+- Tela de ajuda com explicação das regras.
+- Tela sobre com informações da equipe e do projete.
+- Interface de jogo com campo de entrada de palavras.
+- Elementos ilustrativos inspirados no universo de Alice no País das Maravilhas.
+- Menu de opções com acesso às funcionalidades adicionais.
+
+## Mecânica do jogo
+- Sorteio de palavra secreta.
+- Ranking calculado por similaridade semântica.
+- Classificação real das palavras enviadas.
+- Histórico de tentativas ordenado por proximidade.
+- Contador de tentativas.
+- Validação de palavras fora do vocabulário.
+- Identificação de palavras já utilizadas.
+- Sistema de dicas com palavras mais próximas da resposta.
+- Barra de proximidade com escala logarítmica:
+  - 🟩 Verde: muito perto.
+  - 🟨 Amarelo: perto.
+  - 🟥 Vermelho: longe.
+  - Sem barra: muito longe.
+
+## Mecânica do jogo
+- Tela de vitória ao encontrar a palavra secreta.
+- Tela de desistência com revelação da palavra.
+- Exibição do número de tentativas realizadas.
+- Bloqueio de novas tentativas após o encerramento da partida.
+
+## ☕︎︎ Arquitetura do sistema
  
+O projeto utiliza uma arquitetura cliente-servidor, separando a interface gráfica da lógica responsável pelo processamento das palavras e pelo funcionamento do jogo.
+ 
+A comunicação entre os componentes é realizada por meio de **XML-RPC**, utilizando a biblioteca padrão do Python.
+ 
+```text
+┌──────────────────────────────────┐
+│ CLIENTE                          │
+│ cliente_interface_contexto.py    │
+│                                  │
+│ CustomTkinter                    │
+│ Interface gráfica                │
+│ Navegação e interação            │
+└────────────────┬─────────────────┘
+                 │
+                 │ XML-RPC
+                 │ localhost:9876
+                 │
+┌────────────────▼─────────────────┐
+│ SERVIDOR                         │
+│ servidor_integrador_cosseno.py   │
+│                                  │
+│ Processamento NLP                │
+│ Ranking semântico                │
+│ Lógica do jogo                   │
+└────────────────┬─────────────────┘
+                 │
+                 ▼
+             livro.txt
 ```
-┌──────────────────────────────┐   XML-RPC    ┌─────────────────────────────────┐
-│ cliente_interface_contexto.py│ ───────────► │ servidor_integrador_cosseno.py  │
-│ (customtkinter)              │ ◄─────────── │ (spaCy + NumPy)                 │
-└──────────────────────────────┘ localhost:   └─────────────────────────────────┘
-                                   9876                      │
-                                                             ▼
-                                                        livro.txt
-```
  
-- O **servidor** (`servidor_integrador_cosseno.py`) carrega o livro, monta o vocabulário, sorteia a palavra secreta e responde às requisições do cliente.
-- O **cliente** (`cliente_interface_contexto.py`) exibe a interface e chama as funções remotas do servidor por meio de um `ServerProxy`.
-- Por padrão a comunicação é feita em `localhost`, porta `9876`. Para jogar em máquinas diferentes, altere o endereço no `ServerProxy` do cliente (e o endereço em que o servidor escuta) para o IP da máquina do servidor.
+### Responsabilidades dos componentes
+ 
+**Cliente — `cliente_interface_contexto.py`**
+ 
+Responsável pela interface gráfica, navegação entre telas, interação com o jogador e apresentação dos resultados. As operações relacionadas à lógica do jogo são solicitadas remotamente ao servidor por meio de um `ServerProxy`.
+ 
+**Servidor — `servidor_integrador_cosseno.py`**
+ 
+Responsável pelo processamento do livro, construção do vocabulário, sorteio da palavra secreta, cálculo do ranking semântico, validação das tentativas e disponibilização das funções remotas.
+ 
+Por padrão, a comunicação ocorre em `localhost`, utilizando a porta `9876`.
+ 
+### Funções remotas disponibilizadas
+ 
+| Função                     | Responsabilidade                                                                                                |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `iniciarJogo()`            | Sorteia a palavra secreta, gera o ranking e reinicia o histórico de tentativas.                                 |
+| `calcularPosicao(palavra)` | Retorna a posição da palavra no ranking. Retorna `-1` para palavras inválidas e `-2` para tentativas repetidas. |
+| `solicitarDica()`          | Retorna uma palavra mais próxima da secreta do que a melhor tentativa atual.                                    |
+| `revelarPalavraSecreta()`  | Retorna a palavra secreta, utilizada no encerramento por desistência.                                           |
+ 
+---
 
-### Funções remotas expostas pelo servidor
+## ☕︎︎ Processamento de Linguagem Natural (NLP)
  
-| Função | Descrição |
-|---|---|
-| `iniciarJogo()` | Sorteia a palavra secreta, gera o ranking e zera o histórico de tentativas |
-| `calcularPosicao(palavra)` | Retorna a posição da palavra no ranking. Retorna `-1` se a palavra não está no vocabulário e `-2` se já foi tentada |
-| `solicitarDica()` | Retorna uma palavra aleatória que está mais perto da secreta do que a melhor tentativa até o momento |
-| `revelarPalavraSecreta()` | Retorna a palavra secreta (usada ao desistir) |
+O processamento do livro é realizado utilizando a biblioteca spaCy, com o modelo de português `pt_core_news_lg`.
+ 
+### Pipeline de processamento
+ 
+1. **Leitura:** carregamento do arquivo `livro.txt`, contendo o texto de Alice no País das Maravilhas em português.
+2. **Extração de substantivos:** identificação gramatical e lematização das palavras utilizando o spaCy.
+3. **Normalização:** conversão para letras minúsculas, remoção de acentos com Unidecode e eliminação de caracteres não alfabéticos.
+4. **Filtragem:** remoção de palavras irrelevantes por meio de listas de stopwords, incluindo pronomes, verbos auxiliares, advérbios e termos estruturais do livro.
+5. **Construção do vocabulário:** seleção das palavras que aparecem pelo menos cinco vezes na obra (`freq_min=5`).
+6. **Representação vetorial:** utilização dos vetores semânticos (*word embeddings*) disponibilizados pelo modelo.
+7. **Cálculo de similaridade:** comparação dos vetores por meio da similaridade de cosseno.
+8. **Ordenação:** construção do ranking, da palavra semanticamente mais próxima à mais distante da palavra secreta.
+### Similaridade de cosseno
+ 
+A similaridade de cosseno permite comparar a orientação de dois vetores, indicando o quanto suas representações semânticas são próximas.
+ 
+Sua fórmula é:
+ 
+$$
+\text{similaridade}(A,B) = \frac{A \cdot B}{\|A\| \, \|B\|}
+$$
+ 
+Quanto maior a similaridade, maior a proximidade entre as representações vetoriais das palavras.
+ 
+---
 
-### Pipeline de processamento do livro
+## ☕︎︎ Tecnologias utilizadas
  
-1. **Leitura** do `livro.txt` (texto de *Alice no País das Maravilhas* em português).
-2. **Extração de substantivos** com o spaCy (modelo `pt_core_news_lg`), usando o **lema** de cada palavra.
-3. **Normalização**: minúsculas, remoção de acentos (`unidecode`) e de caracteres não alfabéticos.
-4. **Filtragem** por listas de *stopwords* (estruturais, pronomes, verbos auxiliares, advérbios e termos próprios do livro, como "capítulo" e "gutenberg").
-5. **Vocabulário**: apenas palavras que aparecem pelo menos **5 vezes** no livro (`freq_min=5`).
-6. **Ranking**: o vetor (*word embedding*) de cada palavra do vocabulário é comparado ao da palavra secreta por **similaridade de cosseno**, e as palavras são ordenadas da mais para a menos similar.
-## Tecnologias Utilizadas
+| Tecnologia        | Aplicação                                                                    |
+| ----------------- | ---------------------------------------------------------------------------- |
+| Python 3          | Linguagem principal do projeto.                                              |
+| CustomTkinter     | Construção da interface gráfica.                                             |
+| Tkinter (Canvas)  | Criação de elementos ilustrativos e componentes gráficos personalizados.     |
+| spaCy             | Processamento de Linguagem Natural, análise gramatical e vetores semânticos. |
+| `pt_core_news_lg` | Modelo de linguagem em português.                                            |
+| NumPy             | Operações vetoriais e cálculo de similaridade de cosseno.                    |
+| Unidecode         | Normalização e remoção de acentos.                                           |
+| XML-RPC           | Comunicação entre cliente e servidor.                                        |
+| JSON              | Configuração do tema visual.                                                 |
  
-- **Python 3**
-- **[customtkinter](https://github.com/TomSchimansky/CustomTkinter)** - construção da interface gráfica, com tema visual customizado (`tema_contexto.json`)
-- **Tkinter (Canvas)** - elementos ilustrados (relógio do Coelho Branco, cartas de baralho, Absolem/cogumelo) e linhas da tabela de tentativas
-- **[spaCy](https://spacy.io/)** (`pt_core_news_lg`) - análise gramatical, lematização e vetores de palavras
-- **NumPy** - cálculo da similaridade de cosseno
-- **Unidecode** - normalização de acentos
-- **XML-RPC** (`xmlrpc.server` / `xmlrpc.client`, biblioteca padrão) - comunicação entre cliente e servidor
-## Como executar
+---
+ 
+## ☕︎︎ Como executar o projeto
  
 ### Pré-requisitos
  
-- Python 3.10 ou superior instalado
-- pip (gerenciador de pacotes do Python)
-### Instalação das dependências
+- Python 3.10 ou superior.
+- pip.
+- Arquivos do projeto disponíveis localmente.
+### 1. Instalação das dependências
  
 No terminal, dentro da pasta do projeto, execute:
  
 ```bash
 pip install customtkinter spacy numpy unidecode
+```
+ 
+Em seguida, instale o modelo de português do spaCy:
+ 
+```bash
 python -m spacy download pt_core_news_lg
 ```
  
-### Arquivos necessários
+### 2. Verificação dos arquivos
  
-Na mesma pasta devem estar:
+Certifique-se de que os seguintes arquivos estejam disponíveis na pasta do projeto:
  
-- `servidor_integrador_cosseno.py`
 - `cliente_interface_contexto.py`
-- `livro.txt` (obrigatório para o servidor)
+- `servidor_integrador_cosseno.py`
+- `livro.txt`
 - `tema_contexto.json` (opcional)
-> **Observação:** se o arquivo `tema_contexto.json` não for encontrado na mesma pasta do cliente, o programa utiliza automaticamente o tema padrão `"blue"` do customtkinter, sem travar a execução.
+Caso o arquivo `tema_contexto.json` não seja encontrado, o cliente utiliza automaticamente o tema padrão `blue` do CustomTkinter.
  
-### Execução
+### 3. Inicialização do servidor
  
-1. Inicie o **servidor** primeiro e aguarde a mensagem `Servidor Contexto - Alice Iniciado` (o carregamento do modelo e do livro pode levar alguns instantes):
+Abra um terminal na pasta do projeto e execute:
+ 
 ```bash
 python servidor_integrador_cosseno.py
 ```
  
-2. Em outro terminal, inicie o **cliente**:
+Aguarde a mensagem:
+ 
+```text
+Servidor Contexto - Alice Iniciado
+```
+ 
+O carregamento do modelo de linguagem e do livro pode levar alguns instantes.
+ 
+### 4. Inicialização do cliente
+ 
+Abra um segundo terminal e execute:
+ 
 ```bash
 python cliente_interface_contexto.py
 ```
  
-> **Atenção:** a cada partida nova (botão "Entrar") o servidor recalcula o ranking inteiro, então a tela de jogo pode demorar um pouco para abrir. Para fins de teste, o servidor imprime a palavra secreta no terminal.
+Após a abertura da interface, clique em **Entrar** para iniciar uma partida.
  
-### Sobre a fonte utilizada
+> **Observação:** a cada nova partida, o servidor realiza o sorteio da palavra secreta e o cálculo do ranking. Para fins de teste, a palavra secreta também é apresentada no terminal do servidor.
  
-A interface usa a fonte **"Alice"** (fonte decorativa do Google Fonts) em títulos e textos. Caso o sistema não tenha essa fonte instalada, o Tkinter substitui automaticamente por uma fonte padrão do sistema operacional e a interface continua funcionando normalmente, apenas com um visual diferente do planejado. Para reproduzir o visual original, recomenda-se instalar a fonte "Alice" no sistema antes de executar o programa.
+### 5. Comunicação entre máquinas diferentes
  
-## Funcionalidades implementadas
+Por padrão, o sistema utiliza `localhost`, na porta `9876`.
  
-### Interface
+Para executar o cliente e o servidor em máquinas diferentes, é necessário alterar o endereço de conexão no `ServerProxy` do cliente e configurar o servidor para escutar no endereço de rede apropriado.
  
-- **Navegação entre telas**: troca de telas via `mostrar_tela()`, que destrói a tela atual e carrega a nova dentro do `container` principal
-- **Menu Principal**: título, decoração temática (naipes de carta e relógio do Coelho Branco) e botões de Entrar, Ajuda, Sobre e Sair
-- **Tela de Ajuda**: explica as regras básicas do jogo, com ilustração de Absolem (a lagarta) sobre o cogumelo
-- **Tela de Sobre**: nomes da equipe, ilustração com três cartas de baralho e citação das disciplinas e da universidade
-### Tela de Jogo
+---
  
-- Campo de texto para envio de tentativas (também pela tecla Enter)
-- **Posição real** da palavra no ranking, calculada pelo servidor
-- **Tabela de tentativas rolável e ordenada por proximidade**: a cada nova tentativa a tabela é reordenada, com a palavra mais próxima da secreta no topo
-- **Barra de proximidade colorida** em cada linha, em escala logarítmica:
-    - 🟩 verde: muito perto
-    - 🟨 amarelo: perto
-    - 🟥 vermelho: longe
-    - sem barra: muito longe
-- Contador de tentativas
-- **Validação das palavras**, com pop-ups de aviso:
-    - palavra fora do vocabulário do livro ("Palavra inválida")
-    - palavra já tentada na partida ("Já tentada")
-- Menu de opções (ícone de três pontos) com:
-    - **Como jogar** - pop-up com as regras
-    - **Dica** - pede ao servidor uma palavra mais próxima da secreta do que a melhor tentativa atual e a adiciona à tabela. A dica só fica disponível depois de uma tentativa que ainda esteja longe da resposta (posição maior que 2), e cada dica precisa de uma nova tentativa antes de poder ser usada de novo
-    - **Desistir** - pop-up de confirmação (Sim/Não) e tela de resultado que revela a palavra secreta
-    - **Voltar ao menu**
-### Telas de resultado
+## ☕︎︎ Evolução e entregas do projeto
  
-- **Vitória**: exibida ao acertar a palavra secreta (posição 1), mostrando o número de tentativas e a palavra
-- **Desistência**: exibida ao desistir, mostrando o número de tentativas e a palavra secreta
-- Depois de encerrada a partida, não é mais possível enviar tentativas; a única ação disponível é voltar ao menu
+O desenvolvimento foi dividido em duas etapas acadêmicas, permitindo a evolução gradual da interface gráfica para uma aplicação completa com processamento semântico e arquitetura distribuída.
+ 
+### 3º Bimestre — Estrutura inicial
+ 
+- Definição das tecnologias utilizadas.
+- Escolha da obra literária e da identidade visual.
+- Desenvolvimento das telas iniciais: Menu, Ajuda, Sobre e Jogo.
+- Implementação da navegação entre telas.
+- Construção dos elementos gráficos inspirados em Alice no País das Maravilhas.
+### 4º Bimestre — Implementação final
+ 
+- Separação da aplicação em cliente e servidor.
+- Implementação da comunicação por XML-RPC.
+- Processamento do livro utilizando NLP.
+- Extração e normalização do vocabulário.
+- Cálculo do ranking por similaridade de cosseno.
+- Implementação da posição real das palavras.
+- Sistema de dicas funcional.
+- Validação de palavras inválidas e repetidas.
+- Barra visual de proximidade e tabela ordenada.
+- Implementação das telas de vitória e desistência.
+---
+ 
+## ☕︎︎ Equipe
+ 
+### Luna Osti de França
+ 
+- GitHub: [Luna-Osti](https://github.com/Luna-Osti)
+- LinkedIn: [Luna Osti de França](https://www.linkedin.com/in/luna-osti-de-frança-23961b321/)
+### Maria Rita Campana Peixoto
+ 
+- GitHub: [MariaCampanaP](https://github.com/MariaCampanaP)
+- LinkedIn: [Maria Rita Campana Peixoto](https://www.linkedin.com/in/maria-rita-campana/)
+### Vallentina Rodrigues Costa Groetaers Sousa
+ 
+- GitHub: [Vallentinanina](https://github.com/Vallentinanina)
+- LinkedIn: [Vallentina Rodrigues Costa Groetaers Sousa](https://www.linkedin.com/in/vallentina-rodrigues-costa-groetaers-sousa-435b85319/)
+---
+
+## ☕︎︎ Como Usar
+
+## Como clonar apenas esta pasta
+
+Este repositório contém todas as disciplinas do 3° ano. Se quiser baixar **somente** a pasta "Trabalho Contexto" (dentro de Inteligência Artificial), use o sparse-checkout do Git:
+
+```bash
+git clone --no-checkout https://github.com/MariaCampanaP/Terceiro-Ano-de-CCOMP.git
+cd Terceiro-Ano-de-CCOMP
+git sparse-checkout init --cone
+git sparse-checkout set "Inteligência Artificial/Trabalho Contexto - Versão Final"
+git checkout main
+```
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=120&color=FFDE21&reversal=false&section=footer"/>
